@@ -36,10 +36,10 @@ services:
         tags:
             - { name: doctrine.orm.entity_listener }
 
-    App\State\Processor\UserPostProcessor:
+    App\State\Processor\User\UserPostProcessor:
         bind:
             $persistProcessor: '@api_platform.doctrine.orm.state.persist_processor'
 
-    App\State\Processor\UserPutProcessor:
+    App\State\Processor\User\UserPutProcessor:
         bind:
             $persistProcessor: '@api_platform.doctrine.orm.state.persist_processor'

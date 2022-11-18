@@ -48,7 +48,7 @@ use function strlen;
         ),
         new Put(
             security: "is_granted('EDIT', previous_object)",
-            securityMessage: 'only the creator can edit a cheese listing'
+            securityMessage: 'Only the creator can edit a cheese listing'
         ),
         new Delete(
             security: "is_granted('ROLE_ADMIN')"
@@ -116,7 +116,8 @@ class CheeseListing
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'boolean')]
+    #[Groups(['cheese:write'])]
     private ?bool $isPublished = false;
 
     #[ORM\ManyToOne(inversedBy: 'cheeseListings')]

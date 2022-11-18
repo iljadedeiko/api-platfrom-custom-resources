@@ -1,13 +1,13 @@
 <?php
 
-namespace App\State\Processor;
+namespace App\State\Processor\User;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Entity\User;
 use Psr\Log\LoggerInterface;
 
-class UserPostProcessor implements ProcessorInterface
+class UserPutProcessor implements ProcessorInterface
 {
     private ProcessorInterface $persistProcessor;
 
@@ -24,7 +24,7 @@ class UserPostProcessor implements ProcessorInterface
     {
         if (!$data->getId()) {
             $this->logger->info(
-                sprintf('User %s just registered', $data->getEmail()));
+                sprintf('User %s is being updated', $data->getId()));
         }
 
         $result = $this->persistProcessor->process($data, $operation, $uriVariables, $context);
