@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -9,8 +10,9 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Serializer\Filter\PropertyFilter;
-use ApiPlatform\Metadata\ApiFilter;
 use App\Repository\UserRepository;
+use App\State\Processor\UserPostProcessor;
+use App\State\Processor\UserPutProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,10 +29,12 @@ use Symfony\Component\Validator\Constraints as Assert;
         new GetCollection(),
         new Post(
             security: "is_granted('PUBLIC_ACCESS')",
-            validationContext: ['groups' => 'Default', 'create']
+            validationContext: ['groups' => 'Default', 'create'],
+            processor: UserPostProcessor::class,
         ),
         new Put(
-            security: "is_granted('ROLE_USER') and object == user"
+            security: "is_granted('ROLE_USER') and object == user",
+            processor: UserPutProcessor::class
         ),
         new Delete(
             security: "is_granted('ROLE_ADMIN')"
