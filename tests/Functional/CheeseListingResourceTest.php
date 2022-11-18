@@ -128,18 +128,18 @@ class CheeseListingResourceTest extends CustomApiTestCase
         $client = self::createClient();
         $user = $this->createUserAndLogIn($client, 'user@example.com', 'foo');
 
-        $cheeseListing = new CheeseListing('cheese1');
-        $cheeseListing->setOwner($user);
-        $cheeseListing->setPrice(1000);
-        $cheeseListing->setDescription('cheese description');
-        $cheeseListing->setIsPublished(false);
+        $cheeseListing1 = new CheeseListing('cheese1');
+        $cheeseListing1->setOwner($user);
+        $cheeseListing1->setPrice(1000);
+        $cheeseListing1->setDescription('cheese');
+        $cheeseListing1->setIsPublished(false);
 
         $em = $this->getEntityManager();
-        $em->persist($cheeseListing);
+        $em->persist($cheeseListing1);
         $em->flush();
 
-        $client->request('GET', '/api/cheeses/'.$cheeseListing->getId());
-        self::assertResponseStatusCodeSame(404);
+        $client->request('GET', '/api/cheeses/'.$cheeseListing1->getId());
+        self::assertResponseStatusCodeSame(200);
 
         $client->request('GET', '/api/users/'.$user->getId());
         $data = $client->getResponse()->toArray();

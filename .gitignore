@@ -7,4 +7,7 @@
 /public/bundles/
 /var/
 /vendor/
+/node_modules/
+/public/
 ###< symfony/framework-bundle ###
+/xdebug.sh
